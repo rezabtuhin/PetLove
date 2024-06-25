@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.bg-color-primary{
+    background-color: #ECE7Df;;
+}
+
+.bg-color-secondary {
+    background-color: #FFCEC1;
+}
+
+
+#image-logo img, #onboard-link a {
+    opacity: 0;
+}
+
+#image-logo{
+    overflow: hidden;
+}
+
+#image-logo img{
+    animation: reveal-up 1.5s cubic-bezier(0.77, 0, 0.175, 1) 0.5s forwards;
+}
+
+@keyframes reveal-up {
+    0% {
+        transform: translate(0,100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(0,0);
+        opacity: 1;
+    }
+}
+
+
+#onboard-link{
+    overflow: hidden;
+}
+
+#onboard-link a{
+    animation: reveal-down 1.5s cubic-bezier(0.77, 0, 0.175, 1) 0.5s forwards;
+}
+
+
+@keyframes reveal-down {
+    0% {
+        transform: translate(0, -100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+}
+
+#input-fields:not(:placeholder-shown) ~ label {
+    background-color: white;
+}
+
+
+button:disabled {
+    @apply bg-gray-300 cursor-not-allowed;
+}
