@@ -21,12 +21,25 @@
                 <div class="flex w-[70%] xl:w-[50%] lg:w-[50%] md:w-[60%] sm:w-[70%] mt-3">
                     <button type="submit" class="w-full text-black bg-[#e2f0ec] hover:bg-[#dce5e2] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Login</button>
                 </div>
+
+                @if (session()->has('error'))
+                    <div class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 w-[70%] xl:w-[50%] lg:w-[50%] md:w-[60%] sm:w-[70%]" role="alert">
+                        <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                        </svg>
+                        <span class="sr-only">Info</span>
+                        <div>
+                            <span class="font-medium">{{ session('error') }}</span>
+                        </div>
+                    </div>
+                @endif
             </form>
+
             <x-divider />
 
             <div class="w-[70%] xl:w-[50%] lg:w-[50%] md:w-[60%] sm:w-[70%] mt-3">
-                <x-social-button color="#3b5998" label="Sign in with Facebook" icon="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z" />
-                <x-social-button color="#4285F4" label="Sign in with Google" icon="M8.842 18.083a8.8 8.8 0 0 1-8.65-8.948 8.841 8.841 0 0 1 8.8-8.652h.153a8.464 8.464 0 0 1 5.7 2.257l-2.193 2.038A5.27 5.27 0 0 0 9.09 3.4a5.882 5.882 0 0 0-.2 11.76h.124a5.091 5.091 0 0 0 5.248-4.057L14.3 11H9V8h8.34c.066.543.095 1.09.088 1.636-.086 5.053-3.463 8.449-8.4 8.449l-.186-.002Z" />
+{{--                <x-social-button href="auth.redirect" provider="facebook" color="#3b5998" label="Login with Facebook" icon="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z" />--}}
+                <x-social-button href="auth.redirect" provider="google" color="#4285F4" label="Login with Google" icon="M8.842 18.083a8.8 8.8 0 0 1-8.65-8.948 8.841 8.841 0 0 1 8.8-8.652h.153a8.464 8.464 0 0 1 5.7 2.257l-2.193 2.038A5.27 5.27 0 0 0 9.09 3.4a5.882 5.882 0 0 0-.2 11.76h.124a5.091 5.091 0 0 0 5.248-4.057L14.3 11H9V8h8.34c.066.543.095 1.09.088 1.636-.086 5.053-3.463 8.449-8.4 8.449l-.186-.002Z" />
                 <div class="w-full text-center">
                     <a href="{{ route('register') }}" class="text-blue-600 font-bold text-sm hover:underline">Not a member?</a>
                 </div>

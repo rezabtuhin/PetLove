@@ -2,6 +2,9 @@
 
 namespace App\Livewire;
 
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -35,5 +38,13 @@ class Register extends Component
     public function register()
     {
         $validatedData = $this->validate();
+
+        User::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
+        ]);
+
+        return redirect()->route('login');
     }
 }

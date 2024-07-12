@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -11,8 +13,13 @@ class Login extends Component
 {
 
     public string $title = "PetLove | Login";
-    public string $email;
-    public string $password;
+    public string $email = '';
+    public string $password = '';
+
+    protected array $rules = [
+        'email' => 'required|email',
+        'password' => 'required|min:8',
+    ];
 
     public function render()
     {
@@ -23,6 +30,18 @@ class Login extends Component
 
     public function login()
     {
-        dd("hehe");
+        $this->validate();
+
+        $credentials = [
+            'email' => $this->email,
+            'password' => $this->password,
+        ];
+
+        if (Auth::attempt($credentials)) {
+            return redirect()->route('home');
+        }
+
+        session()->flash('error', 'The provided credentials do not match our records.');
+        return redirect()->back();
     }
 }
