@@ -31,36 +31,13 @@
                     <div class="flex items-center ">
                         <div class="flex items-center gap-2">
                             <div class="flex items-center gap-2">
-                                <div type="button" class="flex text-sm bg-gray-800 rounded-full" aria-expanded="false" data-dropdown-toggle="dropdown-user">
-                                    <span class="sr-only">Open user menu</span>
-                                    @if(Auth::user()->oauth_type)
-                                        <img class="w-10 h-10 rounded-full" src="{{ Auth::user()->avatar }}" alt="user photo">
-                                    @else
-                                        @if(Auth::user()->avatar)
-                                            <img class="w-10 h-10 rounded-full" src="{{ asset(Auth::user()->avatar) }}" alt="user photo">
-                                        @else
-                                            @php
-                                                $colors = [
-                                                    'bg-red-500',
-                                                    'bg-blue-500',
-                                                    'bg-green-500',
-                                                    'bg-yellow-500',
-                                                    'bg-purple-500',
-                                                    'bg-pink-500',
-                                                    'bg-indigo-500',
-                                                    'bg-teal-500',
-                                                    'bg-orange-500',
-                                                ];
-
-                                                $randomColor = $colors[array_rand($colors)];
-                                            @endphp
-                                            <div class="{{ $randomColor }} w-10 h-10 rounded-full flex items-center justify-center">
-                                                <p class="text-lg font-black ">{{ Auth::user()->name[0] }}</p>
-                                            </div>
-                                        @endif
-                                    @endif
-                                </div>
-                                <p class="font-bold text-gray-700">{{ Auth::user()->name }}</p>
+                                <a href="{{ url('profile') }}" class="flex items-center gap-2 p-2 hover:bg-[#ffcec1] transition rounded-xl">
+                                    <div type="button" class="flex text-sm bg-gray-800 rounded-full" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                                        <span class="sr-only">Open user menu</span>
+                                        {!! \App\Http\Helper\Helper::getImage() !!}
+                                    </div>
+                                    <p class="font-bold text-gray-700">{{ Auth::user()->name }}</p>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -115,24 +92,36 @@
             <footer class="bg-[#FFD1C1] p-4">
                 <div class="flex justify-between items-center">
                     <div class="flex items-center space-x-2">
-                        <span class="text-black">Contact us</span>
-                        <a href="tel:+1234567890" class="text-black">
-                            <img aria-hidden="true" alt="phone" src="https://openui.fly.dev/openui/24x24.svg?text=📞" />
+                        <a href="tel:+1234567890" class="text-black p-1 bg-[#f2dac4] rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6 w-6 h-6 text-gray-800">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
+                            </svg>
                         </a>
-                        <a href="mailto:example@example.com" class="text-black">
-                            <img aria-hidden="true" alt="email" src="https://openui.fly.dev/openui/24x24.svg?text=✉️" />
+                        <a href="mailto:example@example.com" class="text-black p-1 bg-[#f2dac4] rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6 w-6 h-6 text-gray-800">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                            </svg>
                         </a>
                     </div>
 {{--                    <img src="{{ asset('/storage/background/footer.png') }}" alt="" srcset="">--}}
                     <div class="flex items-center space-x-4">
-                        <a href="https://facebook.com" target="_blank" class="text-black">
-                            <img aria-hidden="true" alt="facebook" src="https://openui.fly.dev/openui/24x24.svg?text=📘" />
+                        <a href="https://facebook.com" target="_blank" class="text-black p-1 bg-[#f2dac4] rounded-lg">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" stroke-width="2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" d="M13.135 6H15V3h-1.865a4.147 4.147 0 0 0-4.142 4.142V9H7v3h2v9.938h3V12h2.021l.592-3H12V6.591A.6.6 0 0 1 12.592 6h.543Z" clip-rule="evenodd"/>
+                            </svg>
+
                         </a>
-                        <a href="https://instagram.com" target="_blank" class="text-black">
-                            <img aria-hidden="true" alt="instagram" src="https://openui.fly.dev/openui/24x24.svg?text=📸" />
+                        <a href="https://instagram.com" target="_blank" class="text-black p-1 bg-[#f2dac4] rounded-lg">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" stroke-width="2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path fill="currentColor" fill-rule="evenodd" d="M3 8a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8Zm5-3a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8Zm7.597 2.214a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2h-.01a1 1 0 0 1-1-1ZM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-5 3a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z" clip-rule="evenodd"/>
+                            </svg>
+
                         </a>
-                        <a href="https://twitter.com" target="_blank" class="text-black">
-                            <img aria-hidden="true" alt="twitter" src="https://openui.fly.dev/openui/24x24.svg?text=🐦" />
+                        <a href="https://twitter.com" target="_blank" class="text-black p-1 bg-[#f2dac4] rounded-lg">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" stroke-width="2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M13.795 10.533 20.68 2h-3.073l-5.255 6.517L7.69 2H1l7.806 10.91L1.47 22h3.074l5.705-7.07L15.31 22H22l-8.205-11.467Zm-2.38 2.95L9.97 11.464 4.36 3.627h2.31l4.528 6.317 1.443 2.02 6.018 8.409h-2.31l-4.934-6.89Z"/>
+                            </svg>
+
                         </a>
                     </div>
                 </div>

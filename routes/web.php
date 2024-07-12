@@ -27,6 +27,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'home'])->name('home');
+    Route::get('/profile', function (){ return view('auth.profile'); })->name('profile');
     Route::get('/logout', [SocialLoginController::class, 'logout'])->name('logout');
     Route::get('/chats', [ChatController::class, 'index'])->name('chats');
     Route::get('/chats/{slug}', [ChatController::class, 'conversation'])->name('conversation');
