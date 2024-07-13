@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->longText('bio')->nullable();
+            $table->string('phone', 20)->nullable();
             $table->string('gender', 100)->nullable();
             $table->string('location', 250)->nullable();
             $table->json('preferred_pet_service')->nullable();

@@ -12,6 +12,7 @@ class AdditionalInfo extends Model
     protected $fillable = [
         'user_id',
         'bio',
+        'phone',
         'gender',
         'location',
         'preferred_pet_service',

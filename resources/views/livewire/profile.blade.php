@@ -20,15 +20,24 @@
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 w-5 h-5">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
                     </svg>
-                    <a class="text-blue-500 hover:underline text-[17px] font-bold " href="mailto:+8801223344553">+8801223344553</a>
+                    @if($phone != "")
+                        <a class="text-blue-500 hover:underline text-[17px] font-bold " href="tel:{{ $phone }}">{{ $phone }}</a>
+                    @else
+                        <p class="text-[17px] font-bold">Not Enough Information</p>
+                    @endif
                 </span>
                 <div class="mt-7">
-                    <form>
-                        <div class="flex items-center gap-11">
-                            <label class="block mb-2 text-sm font-bold text-gray-900 dark:text-white" for="small_size">Change picture</label>
-                            <button type="button" class="py-2 px-4 mb-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Upload</button>
+                    <form wire:submit.prevent="uploadPicture" enctype="multipart/form-data" >
+                        <div wire:ignore>
+                            <div class="flex gap-2">
+                                <div class="flex items-center gap-11">
+                                    <label class="block mb-2 text-sm font-bold text-gray-900 dark:text-white" for="small_size">Change picture</label>
+                                    <button type="submit" class="py-2 px-3 mb-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Upload</button>
+                                </div>
+                                <button id="remove-photo" type="button" class="py-2 px-3 mb-1 text-sm font-medium text-white bg-red-700 hover:bg-red-800 rounded-full border border-gray-200 focus:z-10 focus:ring-4 focus:ring-gray-100">Remove</button>
+                            </div>
+                            <input wire:model="image" accept="image/jpeg, image/png" class="block w-full text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" id="small_size" type="file">
                         </div>
-                        <input class="block w-full text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" id="small_size" type="file">
                     </form>
                 </div>
             </div>
@@ -77,16 +86,16 @@
                     <div class="grid grid-cols-2 gap-2" id="view">
                         <div id="bio">
                             <h4 class="text-lg font-bold">Bio</h4>
-                            {{ $infoExists ? "Yes" : "No Enough Information" }}
+                            {{ $bio != "" ? $bio : "Not Enough Information" }}
                         </div>
                         <div id="gender">
                             <h4 class="text-lg font-bold">Gender</h4>
-                            {{ $infoExists ? "Yes" : "No Enough Information" }}
+                            {{ $gender != "" ? $gender : "Not Enough Information" }}
 
                         </div>
                         <div id="location">
                             <h4 class="text-lg font-bold">Location</h4>
-                            {{ $infoExists ? "Yes" : "No Enough Information" }}
+                            {{ $location != "" ? $location : "Not Enough Information" }}
 
                         </div>
                         <div id="owned-pet-type">
@@ -101,17 +110,35 @@
                         </div>
                         <div id="preferred-pet-service">
                             <h4 class="text-lg font-bold">Preferred Pet Service</h4>
-                            {{ $infoExists ? "Yes" : "No Enough Information" }}
+                            @if(empty($preferred_pet_service))
+                                No Enough Information
+                            @else
+                                @foreach($preferred_pet_service as $ps)
+                                    <span class="bg-yellow-100 text-yellow-800 text-sm font-medium px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">{{ $ps }}</span>
+                                @endforeach
+                            @endif
 
                         </div>
                         <div id="pets-interests">
                             <h4 class="text-lg font-bold">Pet Interest</h4>
-                            {{ $infoExists ? "Yes" : "No Enough Information" }}
+                            @if(empty($pet_interest))
+                                No Enough Information
+                            @else
+                                @foreach($pet_interest as $pi)
+                                    <span class="bg-yellow-100 text-yellow-800 text-sm font-medium px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">{{ $pi }}</span>
+                                @endforeach
+                            @endif
 
                         </div>
                         <div id="preferred-communication">
                             <h4 class="text-lg font-bold">Preferred Communication Channel</h4>
-                            {{ $infoExists ? "Yes" : "No Enough Information" }}
+                            @if(empty($preferred_communication))
+                                No Enough Information
+                            @else
+                                @foreach($preferred_communication as $pc)
+                                    <span class="bg-yellow-100 text-yellow-800 text-sm font-medium px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">{{ $pc }}</span>
+                                @endforeach
+                            @endif
 
                         </div>
                     </div>
@@ -120,6 +147,10 @@
                             <div id="bio" wire:ignore>
                                 <h4 class="text-lg font-bold">Bio</h4>
                                 <textarea wire:model="bio" id="message" rows="2" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
+                            </div>
+                            <div id="bio" wire:ignore>
+                                <h4 class="text-lg font-bold">Phone</h4>
+                                <input wire:model="phone" id="phone" rows="2" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter phone" autocomplete="off"/>
                             </div>
                             <div id="gender" wire:ignore>
                                 <h4 class="text-lg font-bold">Gender</h4>
@@ -160,6 +191,8 @@
                                         top: 100%;
                                         left: 0;
                                         right: 0;
+                                        max-height: 200px; /* Optional: limit the height */
+                                        overflow-y: auto; /* Optional: add scroll if content exceeds the height */
                                     }
 
                                     .autocomplete-items div {
@@ -199,52 +232,68 @@
                                 </select>
                             </div>
 
-                            <div id="preferred-communication" wire:ignore>
-                                <button wire:click="save">Save</button>
-                            </div>
+                        </div>
+                        <div id="preferred-communication" wire:ignore class="mt-4">
+                            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Save</button>
                         </div>
                     </form>
                 </div>
 
-                <script>
-                    $(document).ready(function (){
-
-                        document.addEventListener("DOMContentLoaded", function() {
-                            const input = document.getElementById("location-input");
-                            const autocompleteList = document.getElementById("autocomplete-list");
-
-                            input.addEventListener("input", function() {
-                                const query = this.value;
-
-                                if (!query) {
-                                    autocompleteList.innerHTML = "";
-                                    return;
-                                }
-
-                                fetch(`https://nominatim.openstreetmap.org/search?q=${query}&format=json&addressdetails=1&limit=5`)
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        autocompleteList.innerHTML = "";
-
-                                        data.forEach(place => {
-                                            const item = document.createElement("div");
-                                            item.innerHTML = place.display_name;
-                                            item.addEventListener("click", function() {
-                                                input.value = place.display_name;
-                                                autocompleteList.innerHTML = "";
-                                            });
-
-                                            autocompleteList.appendChild(item);
-                                        });
-                                    })
-                                    .catch(error => console.error('Error fetching location data:', error));
-                            });
-                            document.addEventListener("click", function(e) {
-                                if (!autocompleteList.contains(e.target) && e.target !== input) {
-                                    autocompleteList.innerHTML = "";
-                                }
-                            });
+                @if (session()->has('message'))
+                    <script>
+                        Swal.fire({
+                            title: "Good job!",
+                            text: "{{ session('message') }}",
+                            icon: "success"
                         });
+                    </script>
+                @endif
+
+                <script>
+
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const input = document.getElementById("location-input");
+                        const autocompleteList = document.getElementById("autocomplete-list");
+
+                        input.addEventListener("input", function() {
+                            const query = this.value;
+
+                            if (!query) {
+                                autocompleteList.innerHTML = "";
+                                return;
+                            }
+
+                            fetch(`https://nominatim.openstreetmap.org/search?q=${query}&format=json&addressdetails=1&limit=5`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    autocompleteList.innerHTML = "";
+
+                                    data.forEach(place => {
+                                        const item = document.createElement("div");
+                                        item.className = "autocomplete-item"; // Adding a class for styling
+                                        item.innerHTML = place.display_name;
+                                        item.addEventListener("click", function() {
+                                            input.value = place.display_name;
+                                            input.dispatchEvent(new Event('input')); // Trigger Livewire update
+                                            setTimeout(() => {
+                                                autocompleteList.innerHTML = ""; // Hide the suggestions
+                                            }, 100); // Small delay to ensure the input event is processed
+                                        });
+
+                                        autocompleteList.appendChild(item);
+                                    });
+                                })
+                                .catch(error => console.error('Error fetching location data:', error));
+                        });
+
+                        document.addEventListener("click", function(e) {
+                            if (!autocompleteList.contains(e.target) && e.target !== input) {
+                                autocompleteList.innerHTML = "";
+                            }
+                        });
+                    });
+
+                    $(document).ready(function (){
 
                         $('#pet-service, #pet-interest, #communication').select2({
                             placeholder: 'Select an option', // Placeholder text
@@ -282,14 +331,42 @@
                             })
                         })
 
+
+                        document.addEventListener('DOMContentLoaded', function () {
+                            document.getElementById('remove-photo').addEventListener('click', function () {
+                                Swal.fire({
+                                    title: "Are you sure?",
+                                    text: "You won't be able to revert this!",
+                                    icon: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#3085d6",
+                                    cancelButtonColor: "#d33",
+                                    confirmButtonText: "Yes, delete it!"
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        $wire.emit('removePhotoConfirmed');
+                                    }
+                                });
+                            });
+                        });
+
+                        $wire.on('photoRemoved', () => {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your photo has been deleted.',
+                                'success'
+                            );
+                        });
+
+
                     </script>
                 @endscript
 
                 <div class="hidden p-4 rounded-lg" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
-                    <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Dashboard tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+                    cart history will be added here
                 </div>
                 <div class="hidden p-4 rounded-lg" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-                    <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Settings tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+
                 </div>
             </div>
 
