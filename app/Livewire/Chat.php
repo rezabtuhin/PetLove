@@ -114,6 +114,8 @@ class Chat extends Component
                 ->limit(1)
                 ->first();
 
+
+
             $dc[] = $message;
         }
 //        dd($dc);

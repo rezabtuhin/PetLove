@@ -3,7 +3,12 @@
 namespace App\Livewire;
 
 use App\Models\AdditionalInfo;
+use App\Models\Pet;
 use App\Models\User;
+use Carbon\Carbon;
+use Cassandra\Date;
+use DateTime;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
@@ -75,6 +80,32 @@ class Profile extends Component
     public $image;
 
 
+
+
+    # New pet information
+    #[Rule('required')]
+    public string $petName = "";
+
+    #[Rule('required')]
+    public array $type = [];
+
+    #[Rule('required')]
+    public string $breed = "";
+
+    #[Rule('required')]
+    public string $petGender = "";
+
+    #[Rule('required')]
+    public string $dob = "";
+
+    #[Rule('required')]
+    public array $colors = [];
+
+    #[Rule('required|image|mimes:jpeg,png|max:5120')]
+    public $petImage;
+
+    public $pets;
+
     public function save(){
         $additionalInfo = AdditionalInfo::updateOrCreate(
             ['user_id' => Auth::user()->id],
@@ -112,6 +143,7 @@ class Profile extends Component
     {
         $user = auth()->user();
         $additionalInfo = $user->additionalInfo;
+        $this->pets = $user->pet;
         if ($additionalInfo) {
             $this->bio = $additionalInfo->bio;
             $this->phone = $additionalInfo->phone;
@@ -127,5 +159,30 @@ class Profile extends Component
     {
         $infoExists = Auth::user()->additionalInfo()->exists();
         return view('livewire.profile');
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function addPet(){
+        try {
+            $extension = $this->petImage->getClientOriginalExtension();
+            $imagePath = $this->petImage->storeAs('uploads/pet_picture/'.Auth::user()->id, time().'.'.$extension, 'public');
+            $dob = Carbon::parse($this->dob);
+            Pet::create([
+                'user_id' => auth()->id(),
+                'petName' => $this->petName,
+                'image' => '/storage/'.$imagePath,
+                'type' => $this->type,
+                'breed' => $this->breed,
+                'petGender' => $this->gender,
+                'dob' => $dob,
+                'colors' => $this->colors,
+            ]);
+            session()->flash('message', 'Pet added successfully');
+            return redirect()->to('/profile');
+        }catch (\Exception $e){
+            dd($e);
+        }
     }
 }

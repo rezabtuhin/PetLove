@@ -1,3 +1,4 @@
+@php use Carbon\Carbon; @endphp
 <div>
     <div class="hero">
         <div class="images flex gap-2">
@@ -43,7 +44,7 @@
             </div>
         </div>
 
-        <div class="information">
+        <div class="information" wire:ignore>
             <div class="mt-4 dark:border-gray-700">
                 <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
                     <li class="me-2" role="presentation">
@@ -366,7 +367,203 @@
                     cart history will be added here
                 </div>
                 <div class="hidden p-4 rounded-lg" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                    <div class="flex flex-col">
+                        <div class="-m-1.5 overflow-x-auto">
+                            <div class="p-1.5 min-w-full inline-block align-middle">
+                                <div class="overflow-hidden">
+                                    <div class="flex flex-col">
+                                        <div class="-m-1.5 overflow-x-auto">
+                                            <div class="p-1.5 min-w-full inline-block align-middle">
+                                                <div class="border rounded-lg divide-y divide-gray-200">
+                                                    <div class="py-3 px-4 flex justify-between items-center">
+                                                        <div class="relative max-w-xs">
+                                                            <label for="hs-table-search" class="sr-only">Search</label>
+                                                            <input type="text" name="hs-table-search" id="hs-table-search" class="py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Search for items">
+                                                            <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
+                                                                <svg class="size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                    <circle cx="11" cy="11" r="8"></circle>
+                                                                    <path d="m21 21-4.3-4.3"></path>
+                                                                </svg>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <button data-modal-target="default-modal" data-modal-toggle="default-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                                                                Add new Pet
+                                                            </button>
 
+                                                            <form wire:submit.prevent="addPet" method="POST" enctype="multipart/form-data" wire:ignore>
+                                                                <div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                                                    <div class="relative p-4 w-full max-w-2xl max-h-full">
+                                                                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                                            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                                                                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                                                                    Add new pet
+                                                                                </h3>
+                                                                                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
+                                                                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                                                    </svg>
+                                                                                    <span class="sr-only">Close modal</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="p-4 md:p-5 space-y-4">
+                                                                                <div class="grid grid-cols-3 gap-2">
+                                                                                    <div class="col-span-3 grid grid-cols-2 gap-2">
+                                                                                        <div class="mb-2" wire:ignore>
+                                                                                            <label for="name" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                                                                                            <input wire:model="petName" type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Name">
+                                                                                        </div>
+                                                                                        <div class="mb-2" wire:ignore>
+                                                                                            <label for="type" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Type</label>
+                                                                                            <select wire:model="type" id="type" class="color" multiple="multiple" style="width: 100%">
+                                                                                                <option></option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-span-3 grid grid-cols-2 gap-2" wire:ignore>
+                                                                                        <div class="mb-2" wire:ignore>
+                                                                                            <label for="breed" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Breed Name</label>
+                                                                                            <input wire:model="breed" type="text" id="breed" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Breed Name">
+                                                                                        </div>
+                                                                                        <div class="mb-2" wire:ignore>
+                                                                                            <label for="petImage" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Pet Picture</label>
+                                                                                            <input wire:model="petImage" accept="image/jpeg, image/png" id="petImage" class="block w-full text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" type="file">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div wire:ignore>
+                                                                                        <label for="gender" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
+                                                                                        <select wire:model="petGender" id="gender" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                                                                            <option selected>Choose a Gender</option>
+                                                                                            <option value="Male">Male</option>
+                                                                                            <option value="Female">Female</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <div class="relative max-w-sm" wire:ignore>
+                                                                                        <label for="dob" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Date of Birth</label>
+                                                                                        <input wire:model="dob" datepicker id="dob" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Date of birth">
+                                                                                    </div>
+                                                                                    <div wire:ignore>
+                                                                                        <label for="color" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Colors</label>
+                                                                                        <select wire:model="colors" id="color" class="color" multiple="multiple" style="width: 100%">
+                                                                                            <option></option>
+                                                                                        </select>
+                                                                                    </div>
+
+                                                                                    @script
+                                                                                        <script>
+                                                                                            $(document).ready(function() {
+                                                                                                $('#color').select2({
+                                                                                                    placeholder: "Colors...",
+                                                                                                    tags: true,
+                                                                                                    tokenSeparators: [',', ' '],
+                                                                                                    width: '100%'
+                                                                                                });
+                                                                                                $('#type').select2({
+                                                                                                    placeholder: "Pet type...",
+                                                                                                    tags: true,
+                                                                                                    tokenSeparators: [',', ' '],
+                                                                                                    width: '100%'
+                                                                                                });
+                                                                                            });
+
+                                                                                            $("#type").on('change', function (){
+                                                                                                let data = $(this).val();
+                                                                                                $wire.set('type', data, false)
+                                                                                            })
+                                                                                            $("#color").on('change', function (){
+                                                                                                let data = $(this).val();
+                                                                                                $wire.set('colors', data, false)
+                                                                                            })
+                                                                                        </script>
+                                                                                    @endscript
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                                                                                <button data-modal-hide="default-modal" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600">Submit</button>
+                                                                                <button data-modal-hide="default-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 ">Cancel</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div class="overflow-hidden">
+                                                        @if($pets)
+                                                        <table class="min-w-full divide-y divide-gray-200">
+                                                            <thead class="">
+                                                                <tr>
+                                                                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase w-10">#</th>
+                                                                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase w-10"></th>
+                                                                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase w-24">Name</th>
+                                                                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase w-24">Type</th>
+                                                                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase w-32">Bread Name</th>
+                                                                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase w-16">Gender</th>
+                                                                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase w-24">Age (In Human Lifespan)</th>
+                                                                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase w-24">Color</th>
+                                                                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase w-20">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody class="divide-y divide-gray-200">
+                                                                @php $i = 1 @endphp
+                                                                @foreach($pets as $pet)
+                                                                    <tr>
+                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+                                                                            {{ $i }}</td>
+                                                                        <td class="whitespace-nowrap text-sm text-gray-800">
+                                                                            <img src="{{ asset($pet->image) }}" alt="image" width="300">
+                                                                        </td>
+                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                                                                            {{ $pet->petName }}</td>
+                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                                                                            {{ $pet->type[0] }}</td>
+                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                                                                            {{ $pet->breed }}</td>
+                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                                                                            {{ $pet->petGender }}</td>
+                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                                                                            @php
+                                                                                $Born = Carbon::create($pet->dob)->diff(Carbon::now())->format('%y Year, %m Months and %d Days');
+                                                                                echo $Born;
+                                                                            @endphp
+                                                                        </td>
+                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                                                                            @php
+                                                                                $len = count($pet->colors);
+                                                                                if ($len > 1){
+                                                                                    $text = "Combination of ";
+                                                                                    foreach ($pet->colors as $clrs){
+                                                                                        if (--$len <= 0) {
+                                                                                            break;
+                                                                                        }
+                                                                                        $text .= $clrs.", ";
+                                                                                    }
+                                                                                    $text .= "and ". $pet->colors[count($pet->colors) - 1];
+                                                                                    echo $text;
+                                                                                }
+                                                                                else{
+                                                                                    echo $pet->colors[0];
+                                                                                }
+                                                                            @endphp
+                                                                        </td>
+                                                                        <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                                                                            <button type="button" class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Delete</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                    @php $i++ @endphp
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
