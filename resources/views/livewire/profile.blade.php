@@ -101,12 +101,25 @@
                         </div>
                         <div id="owned-pet-type">
                             <h4 class="text-lg font-bold">Owned Pet Type</h4>
-                            {{ $infoExists ? "Yes" : "No Enough Information" }}
+                            @php
+                                $myPets = array();
+                                foreach (Auth::user()->pet as $curPets){
+                                    $curType = strtolower($curPets->type[0]);
+                                    if (!in_array($curType, $myPets)){
+                                        $myPets[] = $curType;
+                                    }
+                                }
+                                foreach ($myPets as $currPets){
+                            @endphp
+                                <span class="bg-yellow-100 text-yellow-800 text-sm font-medium px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">{{ ucfirst($currPets) }}</span>
+                            @php
+                            }
+                            @endphp
 
                         </div>
                         <div id="no-of-pet">
                             <h4 class="text-lg font-bold">No. of Pet Owned</h4>
-                            {{ $infoExists ? "Yes" : "No Enough Information" }}
+                            {{ count(Auth::user()->pet) }}
 
                         </div>
                         <div id="preferred-pet-service">
