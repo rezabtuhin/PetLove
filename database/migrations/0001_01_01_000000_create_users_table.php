@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('oauth_id')->nullable();
             $table->string('oauth_type')->nullable();
             $table->string('avatar')->nullable();
+            $table->enum('role', ['USER', 'ADMIN', 'VENDOR', 'CONSULTANT', 'CLINIC', 'NGO'])->default('USER');
             $table->rememberToken();
             $table->timestamps();
         });

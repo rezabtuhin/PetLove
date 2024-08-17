@@ -6,25 +6,28 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class AdditionalInfo extends Model
+class Missing extends Model
 {
     use HasFactory;
+
+    protected $table = 'missings';
+
+    // Define the fillable attributes
     protected $fillable = [
-        'user_id',
-        'bio',
-        'phone',
-        'gender',
+        'name',
+        'description',
+        'missing_since',
         'location',
-        'preferred_pet_service',
-        'pet_interest',
-        'preferred_communication',
+        'contact_number',
+        'image',
+        'user_id',
     ];
 
-    protected $casts = [
-        'preferred_pet_service' => 'array',
-        'pet_interest' => 'array',
-        'preferred_communication' => 'array',
-    ];
+    // Define the relationship with the User model
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     protected static function boot(): void
     {
@@ -34,10 +37,5 @@ class AdditionalInfo extends Model
                 $model->user_id = \Auth::user()->id;
             }
         });
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
     }
 }
