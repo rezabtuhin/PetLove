@@ -35,4 +35,6 @@ Route::middleware('auth')->group(function () {
     Route::get("/start-chat/{id}", [ChatController::class, 'startChat'])->name('start-chat');
     Route::get('/missing', [MissingController::class, 'index'])->name('missing.pets');
     Route::post('/missing/create', [MissingController::class, 'create'])->name('missing.create');
+    Route::get('/shop', function () { return view('auth.shop'); })->name('shop');
+    Route::get('/cart', function () { return view('auth.cart'); })->name('cart');
 });

@@ -2,7 +2,7 @@
     <x-navigation-menu>
         <div class="grid grid-cols-3 gap-4">
             <div>
-                <a href="" class="flex flex-col items-center">
+                <a href="/shop" class="flex flex-col items-center">
                     <img src="{{ asset('/storage/background/shop.png') }}" class="w-48 rounded-full bg-white">
                     <span>Shop</span>
                 </a>

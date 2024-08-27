@@ -108,4 +108,9 @@ class User extends Authenticatable implements FilamentUser
 
         return in_array(\Auth::user()->role, $allowedRoles);
     }
+
+    public function carts(): HasMany
+    {
+        return $this->hasMany(Cart::class);
+    }
 }

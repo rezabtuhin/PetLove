@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ItemResource\Pages;
 use App\Filament\Resources\ItemResource\RelationManagers;
+use App\Models\Brand;
 use App\Models\Categories;
 use App\Models\Item;
 use Filament\Forms;
@@ -30,6 +31,10 @@ class ItemResource extends Resource
                                     ->options(Categories::all()->pluck('name', 'name'))
                                     ->searchable()
                                     ->required(),
+                Forms\Components\Select::make('brand')->label('Brand')
+                                    ->options(Brand::all()->pluck('name', 'name'))
+                                    ->searchable()
+                                    ->required(),
                 Forms\Components\FileUpload::make('image')->disk('public')->directory(\Auth::user()->id.'-items')->required(),
                 Forms\Components\MarkdownEditor::make('description')->required(),
             ]);
@@ -42,6 +47,7 @@ class ItemResource extends Resource
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('price'),
                 Tables\Columns\TextColumn::make('category'),
+                Tables\Columns\TextColumn::make('brand'),
                 Tables\Columns\ImageColumn::make('image'),
             ])
             ->filters([
