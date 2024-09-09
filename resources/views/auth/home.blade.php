@@ -14,7 +14,7 @@
                 </a>
             </div>
             <div>
-                <a href="" class="flex flex-col items-center">
+                <a href="/clinic" class="flex flex-col items-center">
                     <img src="{{ asset('/storage/background/clinic.jpg') }}" class="w-48 rounded-full bg-white">
                     <span>Vet Clinic</span>
                 </a>

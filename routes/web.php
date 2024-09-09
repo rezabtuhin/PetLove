@@ -37,4 +37,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/missing/create', [MissingController::class, 'create'])->name('missing.create');
     Route::get('/shop', function () { return view('auth.shop'); })->name('shop');
     Route::get('/cart', function () { return view('auth.cart'); })->name('cart');
+    Route::get('/clinic', function () { return view('auth.clinic'); })->name('clinic');
 });
