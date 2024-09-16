@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\Auth\ChatController;
+use App\Http\Controllers\Auth\ClinicController;
 use App\Http\Controllers\Auth\HomeController;
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\MissingController;
 use App\Livewire\Login;
 use App\Livewire\Register;
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
 
 
 Route::middleware('guest')->group(function () {
@@ -37,5 +39,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/missing/create', [MissingController::class, 'create'])->name('missing.create');
     Route::get('/shop', function () { return view('auth.shop'); })->name('shop');
     Route::get('/cart', function () { return view('auth.cart'); })->name('cart');
-    Route::get('/clinic', function () { return view('auth.clinic'); })->name('clinic');
+    Route::get('/clinic', [ClinicController::class, 'index'])->name('clinic');
+    Route::get('/clinic/{id}', [ClinicController::class, 'clinic']);
+    Route::post('/clinic/{id}', [ClinicController::class, 'post']);
+    Route::post('/clinic/appointment/{id}', [ClinicController::class, 'appointment']);
 });

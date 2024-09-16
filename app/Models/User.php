@@ -113,4 +113,27 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasMany(Cart::class);
     }
+
+    public function reviewsGiven(): HasMany
+    {
+        return $this->hasMany(Review::class, 'rated_by');
+    }
+
+    public function reviewsReceived(): HasMany
+    {
+        return $this->hasMany(Review::class, 'rated_to');
+    }
+
+    public function appointmentsMade(): HasMany
+    {
+        return $this->hasMany(Appointment::class, 'appointment_by');
+    }
+
+    /**
+     * Get the appointments for the user (if the user is a clinic).
+     */
+    public function appointmentsReceived(): HasMany
+    {
+        return $this->hasMany(Appointment::class, 'appointment_in');
+    }
 }
