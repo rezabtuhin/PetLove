@@ -39,7 +39,9 @@
                     </div>
                 </div>
                 <div class="" style="max-height: 220px; overflow: hidden; overflow-y: auto">
-                    <h1>{{ $clinic->additionalInfo->bio }}</h1>
+                    @if(isset($clinic->additionalInfo->bio))
+                        <h1>{{ $clinic->additionalInfo->bio }}</h1>
+                    @endif
                 </div>
             </div>
         </div>
