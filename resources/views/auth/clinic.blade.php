@@ -22,7 +22,11 @@
                         </div>
 
                         <div>
-                            <h1 class="truncate text-[13px]">{{ $clinic->additionalInfo->bio }}</h1>
+                            <h1 class="truncate text-[13px]">
+                                @if(isset($clinic->additionalInfo->bio))
+                                    {{ $clinic->additionalInfo->bio }}
+                                @endif
+                            </h1>
                         </div>
                     </div>
                 </a>
