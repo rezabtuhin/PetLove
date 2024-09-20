@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\ClinicController;
 use App\Http\Controllers\Auth\HomeController;
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\MissingController;
+use App\Http\Controllers\NgoController;
 use App\Livewire\Login;
 use App\Livewire\Register;
 use Illuminate\Support\Facades\Route;
@@ -43,4 +44,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/clinic/{id}', [ClinicController::class, 'clinic']);
     Route::post('/clinic/{id}', [ClinicController::class, 'post']);
     Route::post('/clinic/appointment/{id}', [ClinicController::class, 'appointment']);
+    Route::get('/ngo', [NgoController::class, 'index']);
+    Route::get('/ngo/{id}', [NgoController::class, 'ngo']);
+    Route::post('/ngo/{id}', [NgoController::class, 'create']);
+    Route::get('/ngo/adoption/{id}', [NgoController::class, 'adoption']);
+    Route::post('/ngo/adopt/{id}', [NgoController::class, 'adopt']);
 });

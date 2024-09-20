@@ -25,6 +25,13 @@
                     <span>Missing Pets</span>
                 </a>
             </div>
+
+            <div>
+                <a href="/ngo" class="flex flex-col items-center">
+                    <img src="{{ asset('/storage/background/shelter.jpg') }}" class="w-48 rounded-full bg-white">
+                    <span>NGOs</span>
+                </a>
+            </div>
         </div>
 
     </x-navigation-menu>

@@ -136,4 +136,24 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasMany(Appointment::class, 'appointment_in');
     }
+
+    public function volunteerAsInstitution(): HasMany
+    {
+        return $this->hasMany(Volunteer::class, 'institution');
+    }
+
+    public function volunteerAsPerson(): HasMany
+    {
+        return $this->hasMany(Volunteer::class, 'person');
+    }
+
+    public function adoptionsListed(): HasMany
+    {
+        return $this->hasMany(Adoption::class, 'listed_by');
+    }
+
+    public function adoptions(): HasMany
+    {
+        return $this->hasMany(Adopt::class, 'user_id');
+    }
 }
