@@ -17,6 +17,6 @@ class CartCounter extends Component
     #[On('updateCartCount')]
     public function getCartItemCount(): void
     {
-        $this->total = Cart::whereUserId(\Auth::user()->id)->count();
+        $this->total = Cart::whereUserId(\Auth::user()->id)->where('is_paid', 0)->count();
     }
 }

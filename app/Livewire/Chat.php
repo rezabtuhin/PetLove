@@ -118,24 +118,27 @@ class Chat extends Component
 
             $dc[] = $message;
         }
-//        dd($dc);
-        if ($dc[0]){
+
+        if (count($dc) > 1 && !empty($dc[1])){
             usort($dc, function($a, $b) {
                 return strtotime($b->sent_at) - strtotime($a->sent_at);
             });
+        }
 
+        if ($dc[0]){
             foreach ($dc as $sm) {
-                $date = new DateTime($sm->sent_at);
-                $this->detailed_conversations[] = [
-                    'm_id' => $sm->message_id,
-                    'c_id' => $sm->conversation_id,
-                    'user_id' => $sm->sender_id == $userId ? $sm->receiver_id : $sm->sender_id,
-                    'content' => $sm->content,
-                    'sent_at' => $date->format('F j, Y, g:i a'),
-                    'slug' => $sm->slug,
-                ];
+                if (!empty($sm)){
+                    $date = new DateTime($sm->sent_at);
+                    $this->detailed_conversations[] = [
+                        'm_id' => $sm->message_id,
+                        'c_id' => $sm->conversation_id,
+                        'user_id' => $sm->sender_id == $userId ? $sm->receiver_id : $sm->sender_id,
+                        'content' => $sm->content,
+                        'sent_at' => $date->format('F j, Y, g:i a'),
+                        'slug' => $sm->slug,
+                    ];
+                }
             }
         }
-//        dd($this->detailed_conversations);
     }
 }

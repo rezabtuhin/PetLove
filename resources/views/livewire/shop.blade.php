@@ -1,4 +1,20 @@
 <div>
+
+    @if(session('great'))
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    title: 'Success!',
+                    text: "{{ session('great') }}",
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>
+
+    @endif
+
     <div class="filter-row grid grid-cols-3 gap-2">
         <div>
             <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categories</label>

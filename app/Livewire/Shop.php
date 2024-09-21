@@ -29,7 +29,8 @@ class Shop extends Component
         $data = [
             'user_id' => \Auth::user()->id,
             'item_id' => $id,
-            'amount' => 1
+            'amount' => 1,
+            'is_paid' => 0
         ];
         Cart::updateOrCreate($data);
         $this->dispatch('updateCartCount');

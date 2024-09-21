@@ -8,6 +8,7 @@ use App\Http\Controllers\MissingController;
 use App\Http\Controllers\NgoController;
 use App\Livewire\Login;
 use App\Livewire\Register;
+use App\Models\Cart;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 
@@ -54,5 +55,39 @@ Route::middleware('auth')->group(function () {
             ->where('id', '!=', Auth::user()->id)
             ->get();
         return view('auth.consultant', compact('consultants'));
+    });
+
+    Route::get('/payment', function (){
+        return view('auth.payment.payment');
+    });
+
+    Route::post('/otp', function (\Illuminate\Support\Facades\Request $request){
+        return redirect('/otp');
+    });
+
+    Route::get('/otp', function(){
+        return view('auth.payment.otp');
+    });
+
+    Route::post('/pin', function(){
+        return redirect('/pin');
+    });
+
+    Route::get('/pin', function (){
+        $items = Cart::with('item')->where(['user_id' => \Auth::user()->id])->where('is_paid', 0)->get();
+        $total = 0; $sub_total = 0; $tax = 0;
+        foreach ($items as $item){
+            $sub_total += ($item->item->price * $item->amount);
+        }
+        $total = $sub_total - $tax;
+        return view('auth.payment.pin', compact('total'));
+    });
+
+    Route::post('/paid', function (){
+        Cart::where('user_id', \Illuminate\Support\Facades\Auth::user()->id)
+            ->where('is_paid', 0)
+            ->update(['is_paid' => 1]);
+
+        return redirect('/shop')->with('great', 'Thanks for shopping with us');
     });
 });

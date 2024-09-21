@@ -3,7 +3,12 @@
 namespace App\Livewire;
 
 use App\Models\Cart;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Livewire\Component;
 
 class ShoppingCart extends Component
@@ -12,7 +17,7 @@ class ShoppingCart extends Component
     public int $sub_total , $tax , $total;
     public function render()
     {
-        $this->items = Cart::with('item')->where(['user_id' => \Auth::user()->id])->get();
+        $this->items = Cart::with('item')->where(['user_id' => \Auth::user()->id])->where('is_paid', 0)->get();
         $this->total = 0; $this->sub_total = 0; $this->tax = 0;
         foreach ($this->items as $item){
             $this->sub_total += ($item->item->price * $item->amount);
@@ -47,5 +52,10 @@ class ShoppingCart extends Component
         }
         $this->dispatch('updateCartCount');
         session()->flash('success', 'Item removed');
+    }
+
+    public function checkout(): Application|Redirector|RedirectResponse
+    {
+        return redirect('/payment');
     }
 }

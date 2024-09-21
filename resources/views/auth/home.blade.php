@@ -1,5 +1,20 @@
 <x-layout title="home">
     <x-navigation-menu>
+
+        @if(session('warning'))
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        title: 'Warning!',
+                        text: "{{ session('warning') }}",
+                        icon: "warning",
+                        confirmButtonText: 'OK'
+                    });
+                });
+            </script>
+
+        @endif
         <div class="grid grid-cols-3 gap-4">
             <div>
                 <a href="/shop" class="flex flex-col items-center">
