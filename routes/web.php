@@ -49,4 +49,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/ngo/{id}', [NgoController::class, 'create']);
     Route::get('/ngo/adoption/{id}', [NgoController::class, 'adoption']);
     Route::post('/ngo/adopt/{id}', [NgoController::class, 'adopt']);
+    Route::get('/consultant', function () {
+        $consultants = User::where('role', 'CONSULTANT')
+            ->where('id', '!=', Auth::user()->id)
+            ->get();
+        return view('auth.consultant', compact('consultants'));
+    });
 });

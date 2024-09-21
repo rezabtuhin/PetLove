@@ -8,7 +8,7 @@
                 </a>
             </div>
             <div>
-                <a href="" class="flex flex-col items-center">
+                <a href="/consultant" class="flex flex-col items-center">
                     <img src="{{ asset('/storage/background/online.jpg') }}" class="w-48 rounded-full bg-white">
                     <span>Online Consultant</span>
                 </a>
