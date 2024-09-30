@@ -91,7 +91,7 @@
                                 </div>
                             </div>
 
-                            <button class="flex justify-center w-full px-10 py-3 mt-6 font-medium text-white uppercase bg-gray-800 rounded-full shadow item-center hover:bg-gray-700 focus:shadow-outline focus:outline-none" wire:click="checkout" wire:loading.attr="disabled">
+                            <button class="flex justify-center w-full px-10 py-3 mt-6 font-medium text-white uppercase bg-gray-800 rounded-full shadow item-center hover:bg-gray-700 focus:shadow-outline focus:outline-none" wire:click="checkout" wire:loading.attr="disabled" {{ $this->total <= 0 ? 'disabled' : ''}}>
                                 <svg aria-hidden="true" data-prefix="far" data-icon="credit-card" class="w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                                     <path
                                         fill="currentColor"

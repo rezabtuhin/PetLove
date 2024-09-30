@@ -41,7 +41,7 @@ class Profile extends Page
         $this->name = $this->user->name;
         $this->email = $this->user->email;
         $this->role = $this->user->role;
-        $this->avatar = $this->user->avatar;
+        $this->avatar = $this->user->avatar ?? " ";
     }
 
     public function form(Form $form): Form
